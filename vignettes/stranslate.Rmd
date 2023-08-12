@@ -1,0 +1,225 @@
+---
+title: "stranslate"
+author: 
+- name: "Sigbert Klinke" 
+  email: sigbert@hu-berlin.de
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+vignette: > 
+  %\VignetteIndexEntry{plot.matrix} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  \usepackage[utf8]{inputenc} 
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(stranslate)
+options(stranslate.lang='en')
+```
+
+# General
+
+In R there are several ways to support multilingual messages:
+
+* the standard R tools with `po` files, and
+* the supporting libraries [`potools`](https://CRAN.R-project.org/package=potools) and [`poio`](https://CRAN.R-project.org/package=poio).
+
+You can access translation services that usually require a paid account, such as
+
+* [`deeplr`](https://CRAN.R-project.org/package=deeplr) - a wrapper for the ` DeepL` Pro API,
+* [`googleLanguageR`](https://CRAN.R-project.org/package=googleLanguageR) - calls Google's 'Natural Language' API, 'Cloud Translation' API and so on, and
+* [`gtranslate`](https://CRAN.R-project.org/package=gtranslate) - translating between different languages (which does not require a Google account).
+
+There are also key-based approaches such as the [`translated`](https://CRAN.R-project.org/package=translated) library, which is based on JSON files. The [`stranslate`](https://CRAN.R-project.org/package=gtranslate) package also uses a key-based approach, but based on plain text files (as a lazy guy, I don't want to follow the JSON typing rules ;).
+
+# Using `stranslate`
+
+## A first example
+
+The first step is to load one or more files with translations
+
+```{r}
+library("stranslate")
+file <- system.file("messages", "messages.txt", package="stranslate")
+loadMsg(file) # load the translation(s)
+```
+
+and to show what has been loaded
+
+```{r}
+listMsg()     # show all loaded keys and domains
+```
+
+We can access from the `default` domain some messages
+
+```{r}
+getMsg(ROUND=3)
+getMsg(ROUND=3, .lang="de")
+getMsg(ROUND=1)
+getMsg(ROUND=1, .lang="de")
+```
+
+Instead of `ROUND` you could use `'ROUND'`, especially if you write a package. Since English is the fallback language, an English translation must be there.
+
+And a multi-line example:
+
+```{r}
+loadMsg(system.file("messages", "Rdewiki.txt", package="stranslate")) # load the translation(s)
+getMsg("Rdewiki", .lang="en")
+getMsg(Rdewiki, .lang="de")
+```
+
+## A more complex example
+
+As you could see a key can have a parameter, also additional parameters are allowed. The current example is taken from [Project fluent](https://projectfluent.org/).
+
+```{r}
+getMsg(PHOTO=5, user="Anne", gender="female")
+getMsg(PHOTO=5, user="Anne", gender="female", .lang="de")
+getMsg(PHOTO=0, user="Bert", gender="male")
+getMsg(PHOTO=1, user="Bert", gender="male", .lang="de")
+```
+
+
+## Languages
+
+If you want to know which languages will be used then use `language`.
+
+```{r}
+# use German spoken in South Tirol (Italy)
+# but available onby standard german and german spoken in Austria
+language('de_IT', c('de', 'de_AT'))
+```
+
+Since `de_IT` is not available, de is used first. If a key is not available in `de`, `en` is used. This is the reason why you need to provide an English translation. Although all languages are equal, English is particularly important in R. Most commands and functions are based on English words.
+
+## Domains
+
+A domain separates messages in different subsets. There are two domains:
+
+* `stranslate` used by the package `stranslate` and
+* `default` the user domain.
+
+If you do not want to load messages into the default domain, use
+
+```{r}
+loadMsg(file, .domain="mydomain") # load the translation(s)
+listMsg()
+```
+
+If you want to use your domain as the default domain, do the following
+
+```{r, eval=FALSE}
+options(stranslate.domain='mydomain')
+```
+
+of use the `.domain='mydomain'` parameter in `getMsg`.
+
+# Making translations
+
+## Create translations in a `txt` file
+
+In the translation file is the first character in a line important:
+
+* If the first character is `#` then a one line comment starts.
+* If the first character is `<` then you are changing to this language.
+* If the first character is a alphanumeric character, a dot or a underscore then a key starts.
+* If the first character is a whitespace then a continuation line starts.
+* If the first character is `?` then condition on the key starts.
+
+```{r, eval=FALSE}
+# switch to german
+< de
+# start key with its default message, note that `r ROUND` is replaced by its value
+ROUND  Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen
+# if ROUND==0 then use this message
+?0     Runden Sie ihr Ergebnis auf eine ganze Zahl
+# if ROUND==1 then use this message
+?1     Runden Sie ihr Ergebnis auf eine Nachkommastelle
+# otherwise use the default message
+```
+
+ATTENTION: All comparison are __character__ comparisons. If in doubt, make sure you convert your parameters yourself, e.g. `getMsg(ROUND=as.character(3))`. 
+
+As you can seem we use the Rmarkdown inline notation for R and internally is `knitr::knit` is used. This allows calculations with the parameters.
+
+ATTENTION: Neither R code chunks nor other engines than R are supported.
+
+
+Other parameters given to `getMsg`, e.g. `getMsg(ROUND=3, user='Anne')` can be used in a message, e.g.
+
+```{r, eval=FALSE}
+ROUND  `r user` runde dein Ergebnis auf `r ROUND` Nachkommastellen
+```
+
+You can also call another key in a message with a specific value, e.g. 
+
+```{r, eval=FALSE}
+PHOTO   `r user` added `r COUNT(PHOTO)` to `r STREAM(gender)` stream
+COUNT   `r PHOTO` new photos
+?1      a new photo
+STREAM  their
+?male   his
+?female her
+```
+
+## Create translations in R
+
+```{r}
+setLang('en', "R")   # choose language and another domain
+setMsg('ROUND'='Round your result to `r ROUND` decimal places',
+       '0'='Round your result to an integer',
+       '1'='Round your result to one decimal place')
+setMsg(PHOTO='`r user` added `r COUNT(PHOTO)` to `r STREAM(gender)` stream')
+setMsg(COUNT='`r PHOTO` new photos', '1'='a new photo')
+setMsg(STREAM='their', 'male'='his', 'female'='her')
+#
+setLang('de', 'R')
+setMsg(ROUND='Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen',
+       '0'='Runden Sie ihr Ergebnis auf eine ganze Zahl',
+       '1'='Runden Sie ihr Ergebnis auf eine Nachkommastelle')
+setMsg(PHOTO='`r user` fügt `r COUNT(PHOTO)` `r STREAM(gender)` Stream zu')
+setMsg(COUNT='`r PHOTO` neue Fotos', '1'= 'ein neues Foto')
+setMsg(STREAM='seinem', 'female'='ihrem')
+#
+getMsg(ROUND=3, .domain="R")
+```
+
+# Translation files in `stranslate`
+
+## `messages.txt`
+
+```{r, echo=FALSE, comment=''}
+file <- system.file("messages", "messages.txt", package="stranslate")
+cat(readLines(file), sep="\n")
+```
+
+## `Rdewiki.txt`
+
+```{r, echo=FALSE, comment=''}
+file <- system.file("messages", "Rdewiki.txt", package="stranslate")
+cat(readLines(file), sep="\n")
+```
+
+## `stranslate.txt`
+
+```{r, echo=FALSE, comment=''}
+file <- system.file("messages", "stranslate.txt", package="stranslate")
+cat(readLines(file), sep="\n")
+```
+
+## `messages.R`
+
+```{r, echo=FALSE, comment=''}
+file <- system.file("messages", "messages.R", package="stranslate")
+cat(readLines(file), sep="\n")
+```

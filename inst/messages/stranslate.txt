@@ -1,0 +1,23 @@
+< de
+COPYRIGHT        (C) 2023+ S. Klinke, Humboldt-Universität zu Berlin
+LANGUAGE         Sprache: `r LANGUAGE`
+DOMAIN           Domäne : `r DOMAIN`
+CURRENT_LANGUAGE Aktuelle Sprache: `r CURRENT_LANGUAGE`
+CURRENT_DOMAIN   Aktuelle Domäne : `r CURRENT_DOMAIN`
+MISSING_KEYS     Für die Sprache '`r lang`' fehlt der/die Schlüssel: `r MISSING_KEYS`
+UNDEFINED_KEYS   Undefinierte Schlüssel: `r UNDEFINED_KEYS`
+KEY_LENGTH       'key' muss die Länge 1 haben, vielleicht funktioniert '"key"'
+KEY_NOT_FOUND    Schlüssel '`r key`' nicht in '`r lang`' gefunden, vielleicht meinten Sie:
+DOMAIN_UNIQUE    Es muss eine eindeutige Domäne angegeben werden
+
+< en
+COPYRIGHT        (C) 2023+ S. Klinke, Humboldt-Universität zu Berlin
+LANGUAGE         Language: `r LANGUAGE`
+DOMAIN           Domain: `r DOMAIN`
+CURRENT_LANGUAGE Current language: `r CURRENT_LANGUAGE`
+CURRENT_DOMAIN   Current domain  : `r CURRENT_DOMAIN`
+MISSING_KEYS     Missing for language '`r lang`' the key(s): `r MISSING_KEYS`
+UNDEFINED_KEYS   Undefined key(s): `r UNDEFINED_KEYS`
+KEY_NOT_FOUND    Key '`r key`' not found in '`r lang`', maybe you meant:
+KEY_LENGTH       'key' must have length 1, maybe '"key"' works
+DOMAIN_UNIQUE    A unique domain must be specified

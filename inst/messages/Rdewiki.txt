@@ -1,0 +1,24 @@
+< de
+Rdewiki R ist eine freie Programmiersprache für statistische Berechnungen und Grafiken. 
+        Sie wurde 1992 von Statistikern für Anwender mit statistischen Aufgaben neu 
+        entwickelt. Die Syntax orientiert sich an der Programmiersprache S, mit der R 
+        weitgehend kompatibel ist, und die Semantik an Scheme. Als Standarddistribution
+        wird R mit einem Interpreter als Kommandozeilenumgebung mit reduzierten 
+        grafischen Schaltflächen angeboten. So ist R aktuell auf den wichtigsten
+        Plattformen verfügbar; die Umgebung wird von den Entwicklern ausdrücklich 
+        ebenfalls als R bezeichnet. R ist Teil des GNU-Projekt. Als integrierte 
+        Entwicklungsumgebung und um die Benutzerfreundlichkeit von R zu erhöhen, wird 
+        außerdem RStudio angeboten.
+        Quelle: https://de.wikipedia.org/wiki/R_(Programmiersprache)
+  
+< en
+Rdewiki R is a free programming language for statistical calculations and graphics. It 
+        was newly developed in 1992 by statisticians for users with statistical tasks. 
+        The syntax is based on the programming language S, with which R is largely 
+        compatible, and the semantics are based on Scheme. As a standard distribution,
+        R is supplied with an interpreter as a command line environment with reduced 
+        graphical buttons. Thus R is currently available on the most important platforms; 
+        the environment is also explicitly referred to as R by the developers. R is part
+        of the GNU project. RStudio is also offered as an integrated development 
+        environment and to increase R's user-friendliness.
+        Translated with https://www.deepl.com/translator

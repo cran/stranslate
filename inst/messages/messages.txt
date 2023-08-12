@@ -1,0 +1,22 @@
+< de
+ROUND  Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen
+?0     Runden Sie ihr Ergebnis auf eine ganze Zahl
+?1     Runden Sie ihr Ergebnis auf eine Nachkommastelle
+
+PHOTO   `r user` fügt `r COUNT(PHOTO)` `r STREAM(gender)` Stream zu
+COUNT   `r COUNT` neue Fotos
+?1      ein neues Foto
+STREAM  seinem
+?female ihrem
+
+< en
+ROUND   Round your result to `r ROUND` decimal places
+?0      Round your result to an integer
+?1      Round your result to one decimal place
+
+PHOTO   `r user` added `r COUNT(PHOTO)` to `r STREAM(gender)` stream
+COUNT   `r COUNT` new photos
+?1      a new photo
+STREAM  their
+?male   his
+?female her

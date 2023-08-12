@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>stranslate</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">stranslate</h1>
+<h4 class="author">Sigbert Klinke</h4>
+<a class="author_email" href="mailto:#"><a href="mailto:sigbert@hu-berlin.de" class="email">sigbert@hu-berlin.de</a></a>
+</address>
+<h4 class="date">11 August, 2023</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#general" id="toc-general">General</a></li>
+<li><a href="#using-stranslate" id="toc-using-stranslate">Using
+<code>stranslate</code></a>
+<ul>
+<li><a href="#a-first-example" id="toc-a-first-example">A first
+example</a></li>
+<li><a href="#a-more-complex-example" id="toc-a-more-complex-example">A
+more complex example</a></li>
+<li><a href="#languages" id="toc-languages">Languages</a></li>
+<li><a href="#domains" id="toc-domains">Domains</a></li>
+</ul></li>
+<li><a href="#making-translations" id="toc-making-translations">Making
+translations</a>
+<ul>
+<li><a href="#create-translations-in-a-txt-file" id="toc-create-translations-in-a-txt-file">Create translations in a
+<code>txt</code> file</a></li>
+<li><a href="#create-translations-in-r" id="toc-create-translations-in-r">Create translations in R</a></li>
+</ul></li>
+<li><a href="#translation-files-in-stranslate" id="toc-translation-files-in-stranslate">Translation files in
+<code>stranslate</code></a>
+<ul>
+<li><a href="#messages.txt" id="toc-messages.txt"><code>messages.txt</code></a></li>
+<li><a href="#rdewiki.txt" id="toc-rdewiki.txt"><code>Rdewiki.txt</code></a></li>
+<li><a href="#stranslate.txt" id="toc-stranslate.txt"><code>stranslate.txt</code></a></li>
+<li><a href="#messages.r" id="toc-messages.r"><code>messages.R</code></a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="general" class="section level1">
+<h1>General</h1>
+<p>In R there are several ways to support multilingual messages:</p>
+<ul>
+<li>the standard R tools with <code>po</code> files, and</li>
+<li>the supporting libraries <a href="https://CRAN.R-project.org/package=potools"><code>potools</code></a>
+and <a href="https://CRAN.R-project.org/package=poio"><code>poio</code></a>.</li>
+</ul>
+<p>You can access translation services that usually require a paid
+account, such as</p>
+<ul>
+<li><a href="https://CRAN.R-project.org/package=deeplr"><code>deeplr</code></a>
+- a wrapper for the <code>DeepL</code> Pro API,</li>
+<li><a href="https://CRAN.R-project.org/package=googleLanguageR"><code>googleLanguageR</code></a>
+- calls Google’s ‘Natural Language’ API, ‘Cloud Translation’ API and so
+on, and</li>
+<li><a href="https://CRAN.R-project.org/package=gtranslate"><code>gtranslate</code></a>
+- translating between different languages (which does not require a
+Google account).</li>
+</ul>
+<p>There are also key-based approaches such as the <a href="https://CRAN.R-project.org/package=translated"><code>translated</code></a>
+library, which is based on JSON files. The <a href="https://CRAN.R-project.org/package=gtranslate"><code>stranslate</code></a>
+package also uses a key-based approach, but based on plain text files
+(as a lazy guy, I don’t want to follow the JSON typing rules ;).</p>
+</div>
+<div id="using-stranslate" class="section level1">
+<h1>Using <code>stranslate</code></h1>
+<div id="a-first-example" class="section level2">
+<h2>A first example</h2>
+<p>The first step is to load one or more files with translations</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stranslate&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;messages&quot;</span>, <span class="st">&quot;messages.txt&quot;</span>, <span class="at">package=</span><span class="st">&quot;stranslate&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">loadMsg</span>(file) <span class="co"># load the translation(s)</span></span></code></pre></div>
+<p>and to show what has been loaded</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">listMsg</span>()     <span class="co"># show all loaded keys and domains</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt;  Current domain  : default</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;  Current language: en -&gt; en</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;  Domain: stranslate</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;       COPYRIGHT, LANGUAGE, DOMAIN, CURRENT_LANGUAGE, CURRENT_DOMAIN</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;       MISSING_KEYS, UNDEFINED_KEYS, KEY_NOT_FOUND, KEY_LENGTH, DOMAIN_UNIQUE</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;       lang, key</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;       COPYRIGHT, LANGUAGE, DOMAIN, CURRENT_LANGUAGE, CURRENT_DOMAIN</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;       MISSING_KEYS, UNDEFINED_KEYS, KEY_LENGTH, KEY_NOT_FOUND, DOMAIN_UNIQUE</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;       lang, key</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;  Domain: default</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, user, gender</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, user, gender</span></span></code></pre></div>
+<p>We can access from the <code>default</code> domain some messages</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">ROUND=</span><span class="dv">3</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Round your result to 3 decimal places&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">ROUND=</span><span class="dv">3</span>, <span class="at">.lang=</span><span class="st">&quot;de&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Runden Sie ihr Ergebnis auf 3 Nachkommastellen&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">ROUND=</span><span class="dv">1</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Round your result to one decimal place&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">ROUND=</span><span class="dv">1</span>, <span class="at">.lang=</span><span class="st">&quot;de&quot;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Runden Sie ihr Ergebnis auf eine Nachkommastelle&quot;</span></span></code></pre></div>
+<p>Instead of <code>ROUND</code> you could use <code>&#39;ROUND&#39;</code>,
+especially if you write a package. Since English is the fallback
+language, an English translation must be there.</p>
+<p>And a multi-line example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">loadMsg</span>(<span class="fu">system.file</span>(<span class="st">&quot;messages&quot;</span>, <span class="st">&quot;Rdewiki.txt&quot;</span>, <span class="at">package=</span><span class="st">&quot;stranslate&quot;</span>)) <span class="co"># load the translation(s)</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="st">&quot;Rdewiki&quot;</span>, <span class="at">.lang=</span><span class="st">&quot;en&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;R is a free programming language for statistical calculations and graphics. It\nwas newly developed in 1992 by statisticians for users with statistical tasks.\nThe syntax is based on the programming language S, with which R is largely\ncompatible, and the semantics are based on Scheme. As a standard distribution,\nR is supplied with an interpreter as a command line environment with reduced\ngraphical buttons. Thus R is currently available on the most important platforms;\nthe environment is also explicitly referred to as R by the developers. R is part\nof the GNU project. RStudio is also offered as an integrated development\nenvironment and to increase R&#39;s user-friendliness.\nTranslated with https://www.deepl.com/translator&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">getMsg</span>(Rdewiki, <span class="at">.lang=</span><span class="st">&quot;de&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;R ist eine freie Programmiersprache für statistische Berechnungen und Grafiken.\nSie wurde 1992 von Statistikern für Anwender mit statistischen Aufgaben neu\nentwickelt. Die Syntax orientiert sich an der Programmiersprache S, mit der R\nweitgehend kompatibel ist, und die Semantik an Scheme. Als Standarddistribution\nwird R mit einem Interpreter als Kommandozeilenumgebung mit reduzierten\ngrafischen Schaltflächen angeboten. So ist R aktuell auf den wichtigsten\nPlattformen verfügbar; die Umgebung wird von den Entwicklern ausdrücklich\nebenfalls als R bezeichnet. R ist Teil des GNU-Projekt. Als integrierte\nEntwicklungsumgebung und um die Benutzerfreundlichkeit von R zu erhöhen, wird\naußerdem RStudio angeboten.\nQuelle: https://de.wikipedia.org/wiki/R_(Programmiersprache)\n&quot;</span></span></code></pre></div>
+</div>
+<div id="a-more-complex-example" class="section level2">
+<h2>A more complex example</h2>
+<p>As you could see a key can have a parameter, also additional
+parameters are allowed. The current example is taken from <a href="https://projectfluent.org/">Project fluent</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">PHOTO=</span><span class="dv">5</span>, <span class="at">user=</span><span class="st">&quot;Anne&quot;</span>, <span class="at">gender=</span><span class="st">&quot;female&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Anne added 5 new photos to her stream&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">PHOTO=</span><span class="dv">5</span>, <span class="at">user=</span><span class="st">&quot;Anne&quot;</span>, <span class="at">gender=</span><span class="st">&quot;female&quot;</span>, <span class="at">.lang=</span><span class="st">&quot;de&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Anne fügt 5 neue Fotos ihrem Stream zu&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">PHOTO=</span><span class="dv">0</span>, <span class="at">user=</span><span class="st">&quot;Bert&quot;</span>, <span class="at">gender=</span><span class="st">&quot;male&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Bert added 0 new photos to his stream&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">PHOTO=</span><span class="dv">1</span>, <span class="at">user=</span><span class="st">&quot;Bert&quot;</span>, <span class="at">gender=</span><span class="st">&quot;male&quot;</span>, <span class="at">.lang=</span><span class="st">&quot;de&quot;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Bert fügt ein neues Foto seinem Stream zu&quot;</span></span></code></pre></div>
+</div>
+<div id="languages" class="section level2">
+<h2>Languages</h2>
+<p>If you want to know which languages will be used then use
+<code>language</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># use German spoken in South Tirol (Italy)</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co"># but available onby standard german and german spoken in Austria</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">language</span>(<span class="st">&#39;de_IT&#39;</span>, <span class="fu">c</span>(<span class="st">&#39;de&#39;</span>, <span class="st">&#39;de_AT&#39;</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;de&quot; &quot;en&quot;</span></span></code></pre></div>
+<p>Since <code>de_IT</code> is not available, de is used first. If a key
+is not available in <code>de</code>, <code>en</code> is used. This is
+the reason why you need to provide an English translation. Although all
+languages are equal, English is particularly important in R. Most
+commands and functions are based on English words.</p>
+</div>
+<div id="domains" class="section level2">
+<h2>Domains</h2>
+<p>A domain separates messages in different subsets. There are two
+domains:</p>
+<ul>
+<li><code>stranslate</code> used by the package <code>stranslate</code>
+and</li>
+<li><code>default</code> the user domain.</li>
+</ul>
+<p>If you do not want to load messages into the default domain, use</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">loadMsg</span>(file, <span class="at">.domain=</span><span class="st">&quot;mydomain&quot;</span>) <span class="co"># load the translation(s)</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">listMsg</span>()</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;  Current domain  : default</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;  Current language: en -&gt; en</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;  Domain: stranslate</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;       COPYRIGHT, LANGUAGE, DOMAIN, CURRENT_LANGUAGE, CURRENT_DOMAIN</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;       MISSING_KEYS, UNDEFINED_KEYS, KEY_NOT_FOUND, KEY_LENGTH, DOMAIN_UNIQUE</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;       lang, key</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;       COPYRIGHT, LANGUAGE, DOMAIN, CURRENT_LANGUAGE, CURRENT_DOMAIN</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;       MISSING_KEYS, UNDEFINED_KEYS, KEY_LENGTH, KEY_NOT_FOUND, DOMAIN_UNIQUE</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;       lang, key</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;  Domain: mydomain</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, user, gender</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, user, gender</span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt;  Domain: default</span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, Rdewiki, user, gender</span></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, Rdewiki, user, gender</span></span></code></pre></div>
+<p>If you want to use your domain as the default domain, do the
+following</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">stranslate.domain=</span><span class="st">&#39;mydomain&#39;</span>)</span></code></pre></div>
+<p>of use the <code>.domain=&#39;mydomain&#39;</code> parameter in
+<code>getMsg</code>.</p>
+</div>
+</div>
+<div id="making-translations" class="section level1">
+<h1>Making translations</h1>
+<div id="create-translations-in-a-txt-file" class="section level2">
+<h2>Create translations in a <code>txt</code> file</h2>
+<p>In the translation file is the first character in a line
+important:</p>
+<ul>
+<li>If the first character is <code>#</code> then a one line comment
+starts.</li>
+<li>If the first character is <code>&lt;</code> then you are changing to
+this language.</li>
+<li>If the first character is a alphanumeric character, a dot or a
+underscore then a key starts.</li>
+<li>If the first character is a whitespace then a continuation line
+starts.</li>
+<li>If the first character is <code>?</code> then condition on the key
+starts.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># switch to german</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="sc">&lt;</span> de</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co"># start key with its default message, note that `r ROUND` is replaced by its value</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>ROUND  Runden Sie ihr Ergebnis auf <span class="st">`</span><span class="at">r ROUND</span><span class="st">`</span> Nachkommastellen</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co"># if ROUND==0 then use this message</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>?<span class="dv">0</span>     Runden Sie ihr Ergebnis auf eine ganze Zahl</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co"># if ROUND==1 then use this message</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>?<span class="dv">1</span>     Runden Sie ihr Ergebnis auf eine Nachkommastelle</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># otherwise use the default message</span></span></code></pre></div>
+<p>ATTENTION: All comparison are <strong>character</strong> comparisons.
+If in doubt, make sure you convert your parameters yourself,
+e.g. <code>getMsg(ROUND=as.character(3))</code>.</p>
+<p>As you can seem we use the Rmarkdown inline notation for R and
+internally is <code>knitr::knit</code> is used. This allows calculations
+with the parameters.</p>
+<p>ATTENTION: Neither R code chunks nor other engines than R are
+supported.</p>
+<p>Other parameters given to <code>getMsg</code>,
+e.g. <code>getMsg(ROUND=3, user=&#39;Anne&#39;)</code> can be used in a message,
+e.g.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>ROUND  <span class="st">`</span><span class="at">r user</span><span class="st">`</span> runde dein Ergebnis auf <span class="st">`</span><span class="at">r ROUND</span><span class="st">`</span> Nachkommastellen</span></code></pre></div>
+<p>You can also call another key in a message with a specific value,
+e.g. </p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>PHOTO   <span class="st">`</span><span class="at">r user</span><span class="st">`</span> added <span class="st">`</span><span class="at">r COUNT(PHOTO)</span><span class="st">`</span> to <span class="st">`</span><span class="at">r STREAM(gender)</span><span class="st">`</span> stream</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>COUNT   <span class="st">`</span><span class="at">r PHOTO</span><span class="st">`</span> new photos</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>?<span class="dv">1</span>      a new photo</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>STREAM  their</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>?male   his</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>?female her</span></code></pre></div>
+</div>
+<div id="create-translations-in-r" class="section level2">
+<h2>Create translations in R</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">setLang</span>(<span class="st">&#39;en&#39;</span>, <span class="st">&quot;R&quot;</span>)   <span class="co"># choose language and another domain</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">setMsg</span>(<span class="st">&#39;ROUND&#39;</span><span class="ot">=</span><span class="st">&#39;Round your result to `r ROUND` decimal places&#39;</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>       <span class="st">&#39;0&#39;</span><span class="ot">=</span><span class="st">&#39;Round your result to an integer&#39;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>       <span class="st">&#39;1&#39;</span><span class="ot">=</span><span class="st">&#39;Round your result to one decimal place&#39;</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="fu">setMsg</span>(<span class="at">PHOTO=</span><span class="st">&#39;`r user` added `r COUNT(PHOTO)` to `r STREAM(gender)` stream&#39;</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="fu">setMsg</span>(<span class="at">COUNT=</span><span class="st">&#39;`r PHOTO` new photos&#39;</span>, <span class="st">&#39;1&#39;</span><span class="ot">=</span><span class="st">&#39;a new photo&#39;</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="fu">setMsg</span>(<span class="at">STREAM=</span><span class="st">&#39;their&#39;</span>, <span class="st">&#39;male&#39;</span><span class="ot">=</span><span class="st">&#39;his&#39;</span>, <span class="st">&#39;female&#39;</span><span class="ot">=</span><span class="st">&#39;her&#39;</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="fu">setLang</span>(<span class="st">&#39;de&#39;</span>, <span class="st">&#39;R&#39;</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="fu">setMsg</span>(<span class="at">ROUND=</span><span class="st">&#39;Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen&#39;</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>       <span class="st">&#39;0&#39;</span><span class="ot">=</span><span class="st">&#39;Runden Sie ihr Ergebnis auf eine ganze Zahl&#39;</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>       <span class="st">&#39;1&#39;</span><span class="ot">=</span><span class="st">&#39;Runden Sie ihr Ergebnis auf eine Nachkommastelle&#39;</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="fu">setMsg</span>(<span class="at">PHOTO=</span><span class="st">&#39;`r user` fügt `r COUNT(PHOTO)` `r STREAM(gender)` Stream zu&#39;</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="fu">setMsg</span>(<span class="at">COUNT=</span><span class="st">&#39;`r PHOTO` neue Fotos&#39;</span>, <span class="st">&#39;1&#39;</span><span class="ot">=</span> <span class="st">&#39;ein neues Foto&#39;</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="fu">setMsg</span>(<span class="at">STREAM=</span><span class="st">&#39;seinem&#39;</span>, <span class="st">&#39;female&#39;</span><span class="ot">=</span><span class="st">&#39;ihrem&#39;</span>)</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">ROUND=</span><span class="dv">3</span>, <span class="at">.domain=</span><span class="st">&quot;R&quot;</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Round your result to 3 decimal places&quot;</span></span></code></pre></div>
+</div>
+</div>
+<div id="translation-files-in-stranslate" class="section level1">
+<h1>Translation files in <code>stranslate</code></h1>
+<div id="messages.txt" class="section level2">
+<h2><code>messages.txt</code></h2>
+<pre><code>&lt; de
+ROUND  Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen
+?0     Runden Sie ihr Ergebnis auf eine ganze Zahl
+?1     Runden Sie ihr Ergebnis auf eine Nachkommastelle
+
+PHOTO   `r user` fügt `r COUNT(PHOTO)` `r STREAM(gender)` Stream zu
+COUNT   `r COUNT` neue Fotos
+?1      ein neues Foto
+STREAM  seinem
+?female ihrem
+
+&lt; en
+ROUND   Round your result to `r ROUND` decimal places
+?0      Round your result to an integer
+?1      Round your result to one decimal place
+
+PHOTO   `r user` added `r COUNT(PHOTO)` to `r STREAM(gender)` stream
+COUNT   `r COUNT` new photos
+?1      a new photo
+STREAM  their
+?male   his
+?female her</code></pre>
+</div>
+<div id="rdewiki.txt" class="section level2">
+<h2><code>Rdewiki.txt</code></h2>
+<pre><code>&lt; de
+Rdewiki R ist eine freie Programmiersprache für statistische Berechnungen und Grafiken. 
+        Sie wurde 1992 von Statistikern für Anwender mit statistischen Aufgaben neu 
+        entwickelt. Die Syntax orientiert sich an der Programmiersprache S, mit der R 
+        weitgehend kompatibel ist, und die Semantik an Scheme. Als Standarddistribution
+        wird R mit einem Interpreter als Kommandozeilenumgebung mit reduzierten 
+        grafischen Schaltflächen angeboten. So ist R aktuell auf den wichtigsten
+        Plattformen verfügbar; die Umgebung wird von den Entwicklern ausdrücklich 
+        ebenfalls als R bezeichnet. R ist Teil des GNU-Projekt. Als integrierte 
+        Entwicklungsumgebung und um die Benutzerfreundlichkeit von R zu erhöhen, wird 
+        außerdem RStudio angeboten.
+        Quelle: https://de.wikipedia.org/wiki/R_(Programmiersprache)
+  
+&lt; en
+Rdewiki R is a free programming language for statistical calculations and graphics. It 
+        was newly developed in 1992 by statisticians for users with statistical tasks. 
+        The syntax is based on the programming language S, with which R is largely 
+        compatible, and the semantics are based on Scheme. As a standard distribution,
+        R is supplied with an interpreter as a command line environment with reduced 
+        graphical buttons. Thus R is currently available on the most important platforms; 
+        the environment is also explicitly referred to as R by the developers. R is part
+        of the GNU project. RStudio is also offered as an integrated development 
+        environment and to increase R&#39;s user-friendliness.
+        Translated with https://www.deepl.com/translator</code></pre>
+</div>
+<div id="stranslate.txt" class="section level2">
+<h2><code>stranslate.txt</code></h2>
+<pre><code>&lt; de
+COPYRIGHT        (C) 2023+ S. Klinke, Humboldt-Universität zu Berlin
+LANGUAGE         Sprache: `r LANGUAGE`
+DOMAIN           Domäne : `r DOMAIN`
+CURRENT_LANGUAGE Aktuelle Sprache: `r CURRENT_LANGUAGE`
+CURRENT_DOMAIN   Aktuelle Domäne : `r CURRENT_DOMAIN`
+MISSING_KEYS     Für die Sprache &#39;`r lang`&#39; fehlt der/die Schlüssel: `r MISSING_KEYS`
+UNDEFINED_KEYS   Undefinierte Schlüssel: `r UNDEFINED_KEYS`
+KEY_LENGTH       &#39;key&#39; muss die Länge 1 haben, vielleicht funktioniert &#39;&quot;key&quot;&#39;
+KEY_NOT_FOUND    Schlüssel &#39;`r key`&#39; nicht in &#39;`r lang`&#39; gefunden, vielleicht meinten Sie:
+DOMAIN_UNIQUE    Es muss eine eindeutige Domäne angegeben werden
+
+&lt; en
+COPYRIGHT        (C) 2023+ S. Klinke, Humboldt-Universität zu Berlin
+LANGUAGE         Language: `r LANGUAGE`
+DOMAIN           Domain: `r DOMAIN`
+CURRENT_LANGUAGE Current language: `r CURRENT_LANGUAGE`
+CURRENT_DOMAIN   Current domain  : `r CURRENT_DOMAIN`
+MISSING_KEYS     Missing for language &#39;`r lang`&#39; the key(s): `r MISSING_KEYS`
+UNDEFINED_KEYS   Undefined key(s): `r UNDEFINED_KEYS`
+KEY_NOT_FOUND    Key &#39;`r key`&#39; not found in &#39;`r lang`&#39;, maybe you meant:
+KEY_LENGTH       &#39;key&#39; must have length 1, maybe &#39;&quot;key&quot;&#39; works
+DOMAIN_UNIQUE    A unique domain must be specified</code></pre>
+</div>
+<div id="messages.r" class="section level2">
+<h2><code>messages.R</code></h2>
+<pre><code>setLang(&#39;en&#39;) # adds to domain &#39;default&#39;
+setMsg(&#39;ROUND&#39;=&#39;Round your result to `r ROUND` decimal places&#39;,
+       &#39;0&#39;=&#39;Round your result to an integer&#39;,
+       &#39;1&#39;=&#39;Round your result to one decimal place&#39;)
+setMsg(PHOTO=&#39;`r user` added `r COUNT(PHOTO)` to `r STREAM(gender)` stream&#39;)
+setMsg(COUNT=&#39;`r PHOTO` new photos&#39;,
+       &#39;1&#39;=&#39;a new photo&#39;)
+setMsg(STREAM=&#39;their&#39;,
+       &#39;male&#39;=&#39;his&#39;,
+       &#39;female&#39;=&#39;her&#39;)
+#
+setLang(&#39;de&#39;) # adds to domain &#39;default&#39;
+setMsg(ROUND=&#39;Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen&#39;,
+       &#39;0&#39;=&#39;Runden Sie ihr Ergebnis auf eine ganze Zahl&#39;,
+       &#39;1&#39;=&#39;Runden Sie ihr Ergebnis auf eine Nachkommastelle&#39;)
+setMsg(PHOTO=&#39;`r user` fügt `r COUNT(PHOTO)` `r STREAM(gender)` Stream zu&#39;)
+setMsg(COUNT=&#39;`r PHOTO` neue Fotos&#39;,
+       &#39;1&#39;= &#39;ein neues Foto&#39;)
+setMsg(STREAM=&#39;seinem&#39;,
+       &#39;female&#39;=&#39;ihrem&#39;)</code></pre>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
