@@ -5,3 +5,7 @@ msg <- new.env()
   if (is.null(getOption("stranslate.domain"))) options(stranslate.domain='default')
   loadMsg(system.file("messages", "stranslate.txt", package = "stranslate"), .domain="stranslate", .silent=TRUE)
 }
+
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage('See the package vignette with `vignette("stranslate")`')
+}

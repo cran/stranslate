@@ -15,8 +15,8 @@
 #' @export
 #'
 #' @examples
-#' findText(system.file("messages", "messages.R", package="stranslate"))
-findText <- function(files, pattern="\\w+{2,}") {
+#' getText(system.file("messages", "messages.R", package="stranslate"))
+getText <- function(files, pattern="\\w+{2,}") {
   dr <- data.frame(file=character(0), line=integer(0), type=character(0), text=character(0))
   for (file in files) {
     if (file.exists(file)) {

@@ -9,7 +9,7 @@ output:
     toc: true
     toc_depth: 4
 vignette: > 
-  %\VignetteIndexEntry{plot.matrix} 
+  %\VignetteIndexEntry{stranslate} 
   %\VignetteEngine{knitr::rmarkdown} 
   \usepackage[utf8]{inputenc} 
 ---

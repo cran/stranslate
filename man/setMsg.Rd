@@ -7,16 +7,26 @@
 setMsg(..., .silent = TRUE)
 }
 \arguments{
-\item{...}{aaa}
+\item{...}{first argument is a key and the default message, further named arguments give optional messages}
 
-\item{.silent}{logical: should during the loading process some output shown and tests after loading run}
+\item{.silent}{logical: should the key shown during the process}
 }
 \value{
-aaa
+returns invisibly the key
 }
 \description{
-setMsg
+Sets for a key the default message and other optional messages. The first argument specifies the key and the default message.
+Further named arguments give the message if the key is the same as the name,
 }
 \examples{
-1+1
+setLang("de", .domain="round")
+# If ROUND=0 then getMsg returns 'Runden Sie ihr Ergebnis auf eine ganze Zahl'
+# If ROUND=1 then getMsg returns 'Runden Sie ihr Ergebnis auf eine Nachkommastelle'
+# Otherwise getMsg retuns 'Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen'
+setMsg(ROUND='Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen',
+       '0'='Runden Sie ihr Ergebnis auf eine ganze Zahl',
+       '1'='Runden Sie ihr Ergebnis auf eine Nachkommastelle')
+getMsg(ROUND=0, .lang="de", .domain="round")
+getMsg(ROUND=1, .lang="de", .domain="round")     
+getMsg(ROUND=2, .lang="de", .domain="round")
 }

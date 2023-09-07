@@ -1,14 +1,26 @@
 #' setMsg
 #'
-#' @param ... aaa
-#' @param .silent logical: should during the loading process some output shown and tests after loading run
+#' Sets for a key the default message and other optional messages. The first argument specifies the key and the default message. 
+#' Further named arguments give the message if the key is the same as the name,
 #'
-#' @return aaa
+#' @param ... first argument is a key and the default message, further named arguments give optional messages
+#' @param .silent logical: should the key shown during the process
+#'
+#' @return returns invisibly the key
 #' @importFrom stringr str_match_all
 #' @export
 #'
 #' @examples
-#' 1+1
+#' setLang("de", .domain="round")
+#' # If ROUND=0 then getMsg returns 'Runden Sie ihr Ergebnis auf eine ganze Zahl'
+#' # If ROUND=1 then getMsg returns 'Runden Sie ihr Ergebnis auf eine Nachkommastelle'
+#' # Otherwise getMsg retuns 'Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen'
+#' setMsg(ROUND='Runden Sie ihr Ergebnis auf `r ROUND` Nachkommastellen',
+#'        '0'='Runden Sie ihr Ergebnis auf eine ganze Zahl',
+#'        '1'='Runden Sie ihr Ergebnis auf eine Nachkommastelle')
+#' getMsg(ROUND=0, .lang="de", .domain="round")
+#' getMsg(ROUND=1, .lang="de", .domain="round")     
+#' getMsg(ROUND=2, .lang="de", .domain="round")
 setMsg <- function (..., .silent=TRUE) {
   isNamed <- function (nx) {
     if (is.null(nx)) return(FALSE)
@@ -60,4 +72,5 @@ setMsg <- function (..., .silent=TRUE) {
   }
   msg[[msg$.domain]][[msg$.lang]][[key]] <- fun
   if (!.silent) cat("  ", key, "\n")
+  invisible(key)
 }

@@ -7,16 +7,23 @@
 findText(files, pattern = "\\\\w+{2,}")
 }
 \arguments{
-\item{files}{character: names of R file(s)}
+\item{files}{character: names of R files to analyse}
 
 \item{pattern}{character: pattern to match a string (default: \code{"\\\\w+{2,}"})}
 }
 \value{
-a text matrix with strings and file with line numbers
+a data frame with the columns
+\itemize{
+\item \code{file} with file name
+\item \code{line} the line number
+\item \code{type} if a string constant (\code{STR_CONST}), a \code{getMsg} (\code{GETMSG}), or a \code{setMsg} (\code{SETMSG}) was found
+\item \code{text} the text of the string constant or the key used in \code{getMsg} or \code{setMsg}
+}
 }
 \description{
-Finds strings matching \code{pattern} in \code{files}; for details for matching see \code{\link[base:grep]{base::grepl()}}.
+Extract all texts, \code{getMsg}, or \code{setMsg} calls in the R files given.
+Note that the \verb{'} and \verb{"} are part of the string, thus \code{'ROUND'} has a length of 7!
 }
 \examples{
-1+1
+findText(system.file("messages", "messages.R", package="stranslate"))
 }
