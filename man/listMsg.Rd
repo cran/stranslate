@@ -18,4 +18,7 @@ Lists all keys in all languages in a specific domain or all domains (default).
 \examples{
 listMsg("stranslate")
 listMsg()
+# load some more text
+loadMsg(system.file("messages/messages.txt", package="stranslate"), .overwrite=TRUE) # avoid warning
+listMsg()
 }

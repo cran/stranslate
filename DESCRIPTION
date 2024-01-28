@@ -1,7 +1,7 @@
 Package: stranslate
 Type: Package
 Title: Simple Translation Between Different Languages
-Version: 0.1.1
+Version: 0.1.3
 Authors@R: 
   c(person("Sigbert", "Klinke", email="sigbert@hu-berlin.de", role=c("aut", "cre")))
 Maintainer: Sigbert Klinke <sigbert@hu-berlin.de>
@@ -13,11 +13,11 @@ URL: https://github.com/sigbertklinke/stranslate (development version)
 VignetteBuilder: knitr
 License: GPL-3
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: rmarkdown
 Imports: crayon, knitr, stringr
 NeedsCompilation: no
-Packaged: 2023-09-07 11:26:56 UTC; sigbert
+Packaged: 2024-01-28 09:47:21 UTC; sk
 Author: Sigbert Klinke [aut, cre]
 Repository: CRAN
-Date/Publication: 2023-09-07 12:20:06 UTC
+Date/Publication: 2024-01-28 10:10:02 UTC

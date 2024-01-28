@@ -11,6 +11,9 @@
 #' @examples
 #' listMsg("stranslate")
 #' listMsg()
+#' # load some more text
+#' loadMsg(system.file("messages/messages.txt", package="stranslate"), .overwrite=TRUE) # avoid warning
+#' listMsg()
 listMsg <- function(.domain=NULL) {
   #browser()
   domain <- getOption("stranslate.domain")

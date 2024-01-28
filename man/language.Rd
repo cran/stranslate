@@ -15,7 +15,7 @@ language(
 
 \item{available.languages}{character: names of languages (default: \code{NULL}). If \code{NULL} then list of loaded languages is used.}
 
-\item{.domain}{character: domain namesd (default: \code{NULL})}
+\item{.domain}{character: domain names (default: \code{NULL})}
 }
 \value{
 character of languages use to find a message

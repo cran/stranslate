@@ -8,7 +8,8 @@ loadMsg(
   files,
   .domain = getOption("stranslate.domain"),
   .lang = "en",
-  .silent = TRUE
+  .silent = TRUE,
+  .overwrite = FALSE
 )
 }
 \arguments{
@@ -18,7 +19,9 @@ loadMsg(
 
 \item{.lang}{character: default language (default: 'en')}
 
-\item{.silent}{logical: should during the loading process some output shown and tests after loading run}
+\item{.silent}{logical: should outputs be displayed during the loading process and then \code{listMsg()} be called?}
+
+\item{.overwrite}{logical: should keys be overwritten (default: \code{FALSE})}
 }
 \value{
 invisibly the current message environment
@@ -27,5 +30,18 @@ invisibly the current message environment
 Loads translated messages from one (or more) file into package environment. For details read the vignette \code{vignette("stranslate")}.
 }
 \examples{
-1+1
+# note "messages/messages.txt" contains only english and german ;)
+loadMsg(system.file("messages/messages.txt", package="stranslate"), .overwrite=TRUE) # avoid warning
+# english
+getMsg(ROUND=0, .lang="en")
+getMsg(ROUND=1, .lang="en")
+getMsg(ROUND=2, .lang="en")
+# english
+getMsg(ROUND=0, .lang="de")
+getMsg(ROUND=1, .lang="de")
+getMsg(ROUND=2, .lang="de")
+# default language or if not available then english 
+getMsg(ROUND=0)
+getMsg(ROUND=1)
+getMsg(ROUND=2)
 }

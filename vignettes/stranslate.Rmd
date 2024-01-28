@@ -39,7 +39,7 @@ You can access translation services that usually require a paid account, such as
 * [`googleLanguageR`](https://CRAN.R-project.org/package=googleLanguageR) - calls Google's 'Natural Language' API, 'Cloud Translation' API and so on, and
 * [`gtranslate`](https://CRAN.R-project.org/package=gtranslate) - translating between different languages (which does not require a Google account).
 
-There are also key-based approaches such as the [`translated`](https://CRAN.R-project.org/package=translated) library, which is based on JSON files. The [`stranslate`](https://CRAN.R-project.org/package=gtranslate) package also uses a key-based approach, but based on plain text files (as a lazy guy, I don't want to follow the JSON typing rules ;).
+There are also key-based approaches such as the [`translated`](https://CRAN.R-project.org/package=translated) library, which is based on JSON files. The [`stranslate`](https://CRAN.R-project.org/package=gtranslate) package also uses a key-based approach, but is based on plain text files (as a lazy guy, I don't want to follow the JSON typing rules ;).
 
 # Using `stranslate`
 

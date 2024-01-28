@@ -13,12 +13,10 @@ isName(txt)
 a logical vector
 }
 \description{
-Checks if a \code{txt} is a valid name:
-}
-\details{
+Checks if a \code{txt} consists of valid name(s):
 \itemize{
 \item A name must start with a letter and can be a combination of letters, digits, period(.) and underscore(_).
-\item Reserved words cannot be used as name (TRUE, FALSE, NULL, if...)
+\item Reserved words cannot be used as a name (TRUE, FALSE, NULL, if...)
 }
 }
 \examples{

@@ -3,7 +3,7 @@
 #' Returns a message. The first parameter must be the key to the message. For details read the vignette `vignette("stranslate")`.
 #'
 #' @param ... parameter(s) given to the function
-#' @param .domain character: domain namesd (default: `getOption("stranslate.domain")`)
+#' @param .domain character: domain name (default: `getOption("stranslate.domain")`)
 #' @param .lang character: language to use (default: `getOption("stranslate.lang")`)
 #'
 #' @return the (translated) message
@@ -11,37 +11,30 @@
 #' @export
 #'
 #' @examples
-#' 1+1
-#'
+#' # without a parameter
+#' getMsg("DOMAIN_UNIQUE", .domain="stranslate", .lang="en")
+#' getMsg('DOMAIN_UNIQUE', .domain="stranslate", .lang="de")
+#' getMsg(DOMAIN_UNIQUE, .domain="stranslate")
+#' # with a parameter
+#' getMsg(LANGUAGE="english", .domain="stranslate", .lang="en")
+#' getMsg(LANGUAGE="deutsch", .domain="stranslate", .lang="de")
+#' # which system language is used?
+#' getMsg(LANGUAGE=Sys.getenv("LANG"), .domain="stranslate")
 getMsg <- function (..., .domain=getOption("stranslate.domain"), .lang=getOption("stranslate.lang")) {
+  #browser()
   if (length(.domain)!=1) stop(getMsg('DOMAIN_UNIQUE', .domain="stranslate"))
-  # Extract the arguments from the function call
-  #args  <- match.call(expand.dots = FALSE)$...
-  #nargs <- names(args)
-  #if (is.null(nargs)) nargs <- rep('', length(args))
-  #oargs <- args
-  ##browser()
-  #for (i in 1:length(args)) {
-  #  if (is.call(oargs[[i]]) || is.name(oargs[[i]])) try(oargs[[i]] <- eval(oargs[[i]]), silent=TRUE)
-  #  oargs[[i]] <- as.character(oargs[[i]])
-  #  if (nargs[i]=='') {
-  #    nargs[i]   <- oargs[[i]]
-  #    oargs[[i]] <- ''
-  #  }
-  #}
-  arg_list <- substitute(list(...))[-1]
-  nargs    <- names(arg_list)
+  arg_list <- lapply(substitute(...()), function(e) {
+    ee <- try(eval(e), silent=TRUE)
+    if (inherits(ee, 'try-error')) e else ee
+  })
+  nargs <- names(arg_list)
   if (is.null(nargs)) nargs <- rep('', length(arg_list))
-  nnargs   <- nchar(nargs)
   for (i in seq_along(arg_list)) {
-    err <- try(arg_list[[i]] <- eval(arg_list[[i]], envir=parent.frame()), silent=TRUE)
-    if (inherits(err, 'try-error')) arg_list[[i]] <- as.character(arg_list[[i]])
-    if (nnargs[i]==0) {
-      nargs[i] <- as.character(arg_list[[i]])
+    if (nargs[i]=='') {
+      nargs[i] <- if(is.character(arg_list[[i]])) arg_list[[i]] else paste0(deparse(arg_list[[i]], width.cutoff = 500L), collapse="")
       arg_list[[i]] <- ''
     }
   }
-  arg_list        <- as.list(arg_list)
   names(arg_list) <- nargs
   key    <- nargs[1]
   #

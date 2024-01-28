@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h4 class="author">Sigbert Klinke</h4>
 <a class="author_email" href="mailto:#"><a href="mailto:sigbert@hu-berlin.de" class="email">sigbert@hu-berlin.de</a></a>
 </address>
-<h4 class="date">07 September, 2023</h4>
+<h4 class="date">28 Januar, 2024</h4>
 
 
 <div id="TOC">
@@ -396,7 +396,7 @@ Google account).</li>
 </ul>
 <p>There are also key-based approaches such as the <a href="https://CRAN.R-project.org/package=translated"><code>translated</code></a>
 library, which is based on JSON files. The <a href="https://CRAN.R-project.org/package=gtranslate"><code>stranslate</code></a>
-package also uses a key-based approach, but based on plain text files
+package also uses a key-based approach, but is based on plain text files
 (as a lazy guy, I don’t want to follow the JSON typing rules ;).</p>
 </div>
 <div id="using-stranslate" class="section level1">
@@ -410,23 +410,23 @@ package also uses a key-based approach, but based on plain text files
 <p>and to show what has been loaded</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">listMsg</span>()     <span class="co"># show all loaded keys and domains</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt;  Current domain  : default</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;  Current language: en -&gt; en</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt;  Current domain  : domain</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;  Current language: lang -&gt; en</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;  </span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;  Domain: stranslate</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;  Domain: d</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;       COPYRIGHT, LANGUAGE, DOMAIN, CURRENT_LANGUAGE, CURRENT_DOMAIN</span></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;       MISSING_KEYS, UNDEFINED_KEYS, KEY_NOT_FOUND, KEY_LENGTH, DOMAIN_UNIQUE</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;       lang, key</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;       COPYRIGHT, LANGUAGE, DOMAIN, CURRENT_LANGUAGE, CURRENT_DOMAIN</span></span>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;       MISSING_KEYS, UNDEFINED_KEYS, KEY_LENGTH, KEY_NOT_FOUND, DOMAIN_UNIQUE</span></span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;       lang, key</span></span>
 <span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;  </span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;  Domain: default</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;  Domain: d</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, user, gender</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, user, gender</span></span></code></pre></div>
 <p>We can access from the <code>default</code> domain some messages</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">getMsg</span>(<span class="at">ROUND=</span><span class="dv">3</span>)</span>
@@ -487,29 +487,29 @@ and</li>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">loadMsg</span>(file, <span class="at">.domain=</span><span class="st">&quot;mydomain&quot;</span>) <span class="co"># load the translation(s)</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">listMsg</span>()</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;  Current domain  : default</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;  Current language: en -&gt; en</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;  Current domain  : domain</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;  Current language: lang -&gt; en</span></span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;  </span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;  Domain: stranslate</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;  Domain: d</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;       COPYRIGHT, LANGUAGE, DOMAIN, CURRENT_LANGUAGE, CURRENT_DOMAIN</span></span>
 <span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;       MISSING_KEYS, UNDEFINED_KEYS, KEY_NOT_FOUND, KEY_LENGTH, DOMAIN_UNIQUE</span></span>
 <span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;       lang, key</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;       COPYRIGHT, LANGUAGE, DOMAIN, CURRENT_LANGUAGE, CURRENT_DOMAIN</span></span>
 <span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;       MISSING_KEYS, UNDEFINED_KEYS, KEY_LENGTH, KEY_NOT_FOUND, DOMAIN_UNIQUE</span></span>
 <span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;       lang, key</span></span>
 <span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt;  </span></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;  Domain: mydomain</span></span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;  Domain: d</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, user, gender</span></span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, user, gender</span></span>
 <span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt;  </span></span>
-<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt;  Domain: default</span></span>
-<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a><span class="co">#&gt;  Language: en</span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt;  Domain: d</span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, Rdewiki, user, gender</span></span>
-<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="co">#&gt;  Language: de</span></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="co">#&gt;  Language: l</span></span>
 <span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co">#&gt;       ROUND, PHOTO, COUNT, STREAM, Rdewiki, user, gender</span></span></code></pre></div>
 <p>If you want to use your domain as the default domain, do the
 following</p>

@@ -7,5 +7,5 @@ msg <- new.env()
 }
 
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage('See the package vignette with `vignette("stranslate")`')
+  packageStartupMessage(paste0("stranslate ", utils::packageVersion("stranslate"),': see the package vignette with `vignette("stranslate")`'))
 }

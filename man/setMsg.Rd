@@ -4,12 +4,14 @@
 \alias{setMsg}
 \title{setMsg}
 \usage{
-setMsg(..., .silent = TRUE)
+setMsg(..., .silent = TRUE, .overwrite = FALSE)
 }
 \arguments{
 \item{...}{first argument is a key and the default message, further named arguments give optional messages}
 
 \item{.silent}{logical: should the key shown during the process}
+
+\item{.overwrite}{logical: should keys be overwritten (default: \code{FALSE})}
 }
 \value{
 returns invisibly the key

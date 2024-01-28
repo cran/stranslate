@@ -5,7 +5,8 @@
 #'
 #' @param ... first argument is a key and the default message, further named arguments give optional messages
 #' @param .silent logical: should the key shown during the process
-#'
+#' @param .overwrite logical: should keys be overwritten (default: `FALSE`)
+#' 
 #' @return returns invisibly the key
 #' @importFrom stringr str_match_all
 #' @export
@@ -21,7 +22,7 @@
 #' getMsg(ROUND=0, .lang="de", .domain="round")
 #' getMsg(ROUND=1, .lang="de", .domain="round")     
 #' getMsg(ROUND=2, .lang="de", .domain="round")
-setMsg <- function (..., .silent=TRUE) {
+setMsg <- function (..., .silent=TRUE, .overwrite=FALSE) {
   isNamed <- function (nx) {
     if (is.null(nx)) return(FALSE)
     return(nchar(nx)>0)
@@ -45,7 +46,7 @@ setMsg <- function (..., .silent=TRUE) {
   nargs <- names(args)
   if(any(!isNamed(nargs))) stop("All parameters must be named")
   key  <- names(args)[1]
-  if (!is.null(msg[[msg$.domain]][[msg$.lang]][[key]])) warning(sprintf("Key '%s' already exists in language '%s'", key, msg$.lang))
+  if (!is.null(msg[[msg$.domain]][[msg$.lang]][[key]]) && !.overwrite) warning(sprintf("Key '%s' already exists in language '%s'", key, msg$.lang))
   names(args)[1] <- ''
   args <- unlist(args)
   matches <- str_match_all(args, "`r\\s+(.*?)`")

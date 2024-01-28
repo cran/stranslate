@@ -5,14 +5,29 @@
 #' @param files character: names of text file(s) with translated messages
 #' @param .domain character: domain namesd (default: `getOption("stranslate.domain")`)
 #' @param .lang character: default language (default: 'en')
-#' @param .silent logical: should during the loading process some output shown and tests after loading run
+#' @param .silent logical: should outputs be displayed during the loading process and then `listMsg()` be called?
+#' @param .overwrite logical: should keys be overwritten (default: `FALSE`)
+#' 
 #'
 #' @return invisibly the current message environment
 #' @export
 #'
 #' @examples
-#' 1+1
-loadMsg <- function(files, .domain=getOption("stranslate.domain"), .lang='en', .silent=TRUE) {
+#' # note "messages/messages.txt" contains only english and german ;)
+#' loadMsg(system.file("messages/messages.txt", package="stranslate"), .overwrite=TRUE) # avoid warning
+#' # english
+#' getMsg(ROUND=0, .lang="en")
+#' getMsg(ROUND=1, .lang="en")
+#' getMsg(ROUND=2, .lang="en")
+#' # english
+#' getMsg(ROUND=0, .lang="de")
+#' getMsg(ROUND=1, .lang="de")
+#' getMsg(ROUND=2, .lang="de")
+#' # default language or if not available then english 
+#' getMsg(ROUND=0)
+#' getMsg(ROUND=1)
+#' getMsg(ROUND=2)
+loadMsg <- function(files, .domain=getOption("stranslate.domain"), .lang='en', .silent=TRUE, .overwrite=FALSE) {
   if (!isName(.domain)) stop(sprintf("Only letters, digits, dot and underscores allowed in domain '%s'.", .domain))
   if (is.null(msg[[.domain]])) msg[[.domain]] <- list()
   # browser()
@@ -44,7 +59,7 @@ loadMsg <- function(files, .domain=getOption("stranslate.domain"), .lang='en', .
         # get key
         key   <- tok1[i]
         if (!isName(key)) stop(sprintf("Only letters, digits, dot and underscores allowed in key '%s'.", key))
-        msgi  <- list(.silent=.silent)
+        msgi  <- list(.silent=.silent, .overwrite=.overwrite)
         query <- key
         msgi[[query]] <- trimws(substring(lines[i], 1+nchar(key)))
         j      <- i+1

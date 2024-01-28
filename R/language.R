@@ -4,7 +4,7 @@
 #'
 #' @param lang character: a language code, e.g. from ISO-639
 #' @param available.languages character: names of languages (default: `NULL`). If `NULL` then list of loaded languages is used.
-#' @param .domain character: domain namesd (default: `NULL`)
+#' @param .domain character: domain names (default: `NULL`)
 #'
 #' @return character of languages use to find a message
 #' @export

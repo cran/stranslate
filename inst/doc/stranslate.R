@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -42,10 +42,10 @@ language('de_IT', c('de', 'de_AT'))
 loadMsg(file, .domain="mydomain") # load the translation(s)
 listMsg()
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  options(stranslate.domain='mydomain')
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  # switch to german
 #  < de
 #  # start key with its default message, note that `r ROUND` is replaced by its value
@@ -56,10 +56,10 @@ listMsg()
 #  ?1     Runden Sie ihr Ergebnis auf eine Nachkommastelle
 #  # otherwise use the default message
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  ROUND  `r user` runde dein Ergebnis auf `r ROUND` Nachkommastellen
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  PHOTO   `r user` added `r COUNT(PHOTO)` to `r STREAM(gender)` stream
 #  COUNT   `r PHOTO` new photos
 #  ?1      a new photo
@@ -86,19 +86,19 @@ setMsg(STREAM='seinem', 'female'='ihrem')
 #
 getMsg(ROUND=3, .domain="R")
 
-## ---- echo=FALSE, comment=''--------------------------------------------------
+## ----echo=FALSE, comment=''---------------------------------------------------
 file <- system.file("messages", "messages.txt", package="stranslate")
 cat(readLines(file), sep="\n")
 
-## ---- echo=FALSE, comment=''--------------------------------------------------
+## ----echo=FALSE, comment=''---------------------------------------------------
 file <- system.file("messages", "Rdewiki.txt", package="stranslate")
 cat(readLines(file), sep="\n")
 
-## ---- echo=FALSE, comment=''--------------------------------------------------
+## ----echo=FALSE, comment=''---------------------------------------------------
 file <- system.file("messages", "stranslate.txt", package="stranslate")
 cat(readLines(file), sep="\n")
 
-## ---- echo=FALSE, comment=''--------------------------------------------------
+## ----echo=FALSE, comment=''---------------------------------------------------
 file <- system.file("messages", "messages.R", package="stranslate")
 cat(readLines(file), sep="\n")
 
